@@ -23,6 +23,9 @@ if ! command -v sing-box >/dev/null 2>&1; then
   exit 1
 fi
 
+# sudo 使用 root 的 PATH，通常不含 ~/.local/bin；启动时必须使用绝对路径
+SINGBOX_BIN="${SINGBOX_BIN:-$(command -v sing-box)}"
+
 if ! sudo test -r "${CONFIG_FILE}"; then
   echo "错误: 无法读取 Shadowsocks 配置: ${CONFIG_FILE}"
   exit 1
@@ -169,7 +172,7 @@ if pgrep -f "sing-box.*${SINGBOX_CONFIG}" >/dev/null 2>&1; then
 fi
 
 echo "启动 sing-box TUN..."
-sudo bash -c "nohup sing-box run -c '${SINGBOX_CONFIG}' >'${SINGBOX_LOG_FILE}' 2>&1 & echo \$! > '${SINGBOX_PID_FILE}'"
+sudo bash -c "nohup '${SINGBOX_BIN}' run -c '${SINGBOX_CONFIG}' >'${SINGBOX_LOG_FILE}' 2>&1 & echo \$! > '${SINGBOX_PID_FILE}'"
 sleep 2
 
 new_pid="$(sudo cat "${SINGBOX_PID_FILE}" 2>/dev/null || true)"
