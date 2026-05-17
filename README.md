@@ -1,5 +1,6 @@
 # net-proxy
 
+
 一个基于 `shadowsocks-libev` 的 Linux 代理管理脚本集合，用于一键启动/关闭本地 SOCKS5 代理，并可选启动 `privoxy` 提供本地 HTTP 代理，同时支持自动同步 GNOME 系统代理设置。
 
 ## 功能概览
